@@ -1,13 +1,17 @@
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour
 {
+    private AudioSource sfx;
     public int score;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         score = 0;
+        sfx = GetComponent<AudioSource>();
+        sfx.Play();
     }
 
     // Update is called once per frame
