@@ -12,6 +12,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(CapsuleCollider2D))]
 public class PlatformerMovement : MonoBehaviour
 {
+    private Animator walk;
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
     // [SerializeField] private float gravityMultiplier = 1;    //unused
@@ -35,7 +36,13 @@ public class PlatformerMovement : MonoBehaviour
     
     void Awake()
     {
+        walk = GetComponent<Animator>();
+        
+        walk.SetBool("Walking", false);
+        
         rb = GetComponent<Rigidbody2D>();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
         
         groundCheckCollider = GetComponent<CircleCollider2D>();
         groundCheckCollider.isTrigger = true;
@@ -94,6 +101,14 @@ public class PlatformerMovement : MonoBehaviour
         rb.linearVelocity = velocity;
         
         // Write movement animation code here. (Suggestion: send your current velocity into the Animator for both the x- and y-axis.)
+        if (rb.linearVelocity.x < 0f || rb.linearVelocity.x > 0f)
+        {
+            walk.SetBool("Walking", true);
+        }
+        else
+        {
+            walk.SetBool("Walking", false);
+        }
     }
 
     private bool IsGrounded()
