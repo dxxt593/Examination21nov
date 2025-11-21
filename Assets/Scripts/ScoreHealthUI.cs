@@ -16,6 +16,6 @@ public class ScoreHealthUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = $"Health: {playerScript.health}\nScore: {playerScript.score}";
+        text.text = $"Health: {playerScript.health}\nScore: {playerScript.score}\nTime Left: {(int)playerScript.gameTimer}s";
     }
 }

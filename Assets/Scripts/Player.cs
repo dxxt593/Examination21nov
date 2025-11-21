@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     private bool damageable = true;
     private float damageTimer = 2;
     private float winTimer = 1.5f;
+    public float gameTimer = 60f;
     public int health;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,13 +21,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0)
+        gameTimer -= Time.deltaTime;
+        if (health <= 0 || gameTimer <= 0)
         {
             gameObject.SetActive(false);
             LoseUI.gameObject.SetActive(true);
         }
 
-        if (score == 3)
+        if (GameObject.FindGameObjectsWithTag("Coin").Length <= 0)
         {
             winTimer -= Time.deltaTime;
             if (winTimer <= 0)
