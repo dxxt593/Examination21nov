@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - SignCollider
+  - Spikes
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(CapsuleCollider2D))]
 public class PlatformerMovement : MonoBehaviour
 {
-    private Animator walk;
+    private Animator animator;
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
     // [SerializeField] private float gravityMultiplier = 1;    //unused
@@ -31,14 +31,12 @@ public class PlatformerMovement : MonoBehaviour
     private bool jumpReleased;
     private bool wasGrounded;
     private bool isGrounded;
-
-    [SerializeField] private Animator animator;
     
     void Awake()
     {
-        walk = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         
-        walk.SetBool("Walking", false);
+        animator.SetBool("Walking", false);
         
         rb = GetComponent<Rigidbody2D>();
 
@@ -49,8 +47,6 @@ public class PlatformerMovement : MonoBehaviour
         
         // Set gravity scale to 0 so player won't "fall" 
         rb.gravityScale = 0;
-
-        //animator = GetComponent<Animator>();
     }
     
     void Update()
@@ -102,13 +98,14 @@ public class PlatformerMovement : MonoBehaviour
         
         // Write movement animation code here. (Suggestion: send your current velocity into the Animator for both the x- and y-axis.)
         if (rb.linearVelocity.x < 0f || rb.linearVelocity.x > 0f)
-        {
-            walk.SetBool("Walking", true);
-        }
+            animator.SetBool("Walking", true);
         else
-        {
-            walk.SetBool("Walking", false);
-        }
+            animator.SetBool("Walking", false);
+
+        if (!isGrounded)
+            animator.SetBool("InAir", true);
+        else
+            animator.SetBool("InAir", false);
     }
 
     private bool IsGrounded()
